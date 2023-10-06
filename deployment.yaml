@@ -1,0 +1,175 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lb
+  template:
+    metadata:
+      labels:
+        app: lb
+    spec:
+      containers:
+      - name: lb-container
+        image: nginx
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-service
+spec:
+  selector:
+    app: lb
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snooze1-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snooze1
+  template:
+    metadata:
+      labels:
+        app: snooze1
+    spec:
+      containers:
+      - name: snooze1-container
+        image: snoozeweb/snooze
+        ports:
+        - containerPort: 5200
+        env:
+        - name: DATABASE_URL
+          value: "mongodb://mongo1:27017,mongo2:27017,mongo3:27017/snooze?replicaSet=rs0"
+        - name: SNOOZE_CLUSTER
+          value: "snooze1:5200,snooze2:5200,snooze3:5200"
+        dependsOn:
+        - name: mongo1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snooze2-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snooze2
+  template:
+    metadata:
+      labels:
+        app: snooze2
+    spec:
+      containers:
+      - name: snooze2-container
+        image: snoozeweb/snooze
+        ports:
+        - containerPort: 5200
+        env:
+        - name: DATABASE_URL
+          value: "mongodb://mongo1:27017,mongo2:27017,mongo3:27017/snooze?replicaSet=rs0"
+        - name: SNOOZE_CLUSTER
+          value: "snooze1:5200,snooze2:5200,snooze3:5200"
+        dependsOn:
+        - name: mongo1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snooze3-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snooze3
+  template:
+    metadata:
+      labels:
+        app: snooze3
+    spec:
+      containers:
+      - name: snooze3-container
+        image: snoozeweb/snooze
+        ports:
+        - containerPort: 5200
+        env:
+        - name: DATABASE_URL
+          value: "mongodb://mongo1:27017,mongo2:27017,mongo3:27017/snooze?replicaSet=rs0"
+        - name: SNOOZE_CLUSTER
+          value: "snooze1:5200,snooze2:5200,snooze3:5200"
+        dependsOn:
+        - name: mongo1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo1-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo1
+  template:
+    metadata:
+      labels:
+        app: mongo1
+    spec:
+      containers:
+      - name: mongo1-container
+        image: mongo
+        command:
+        - "--replSet"
+        - "rs0"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo2-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo2
+  template:
+    metadata:
+      labels:
+        app: mongo2
+    spec:
+      containers:
+      - name: mongo2-container
+        image: mongo
+        command:
+        - "--replSet"
+        - "rs0"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo3-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo3
+  template:
+    metadata:
+      labels:
+        app: mongo3
+    spec:
+      containers:
+      - name: mongo3-container
+        image: mongo
+        command:
+        - "--replSet"
+        - "rs0"
