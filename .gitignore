@@ -2,6 +2,7 @@ data/
 backups/
 __pycache__/
 *.py[cod]
+*.env
 build
 dist
 snooze.egg-info

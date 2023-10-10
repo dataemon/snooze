@@ -43,11 +43,17 @@ jq --version
 
 kubectl get secret example-mongodb-admin-my-user -n default -o json | jq -r '.data | with_entries(.value |= @base64d)'
 
+
 kubectl -n default exec --stdin --tty pod/example-mongodb-0 -- /bin/bash
 
 # https://stackoverflow.com/questions/59367515/mongodb-connection-string-uri-not-working-in-the-kubernetes
 # From within the cluster you should reference the MongoDB Pod using <service-name>.<namespace-name>.svc.cluster.local.
 mongosh "mongodb+srv://my-user:test_pw_123@example-mongodb-svc.default.svc.cluster.local/admin?replicaSet=example-mongodb&ssl=false"
+
+mongosh "mongodb+srv://example-mongodb-svc.default.svc.cluster.local/snooze?replicaSet=example-mongodb&ssl=false"
+
+mongosh "mongodb+srv://example-mongodb-svc.default.svc.cluster.local/test?replicaSet=example-mongodb&ssl=false"
+
 
 mongosh "mongodb://my-user:test_pw_123@example-mongodb-0.example-mongodb-svc.default.svc.cluster.local:27017,example-mongodb-1.example-mongodb-svc.default.svc.cluster.local:27017,example-mongodb-2.example-mongodb-svc.default.svc.cluster.local:27017/admin?replicaSet=example-mongodb&ssl=false"
 
@@ -57,3 +63,6 @@ mongosh "mongodb://my-user:test_pw_123@example-mongodb-0.example-mongodb-svc.def
 # # this works!!!
 # mongosh --host localhost -u my-user -p test_pw_123 --authenticationDatabase admin
 ```
+
+
+

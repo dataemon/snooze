@@ -29,7 +29,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == HOST1
+          - node.hostname == ${HOST1}
   snooze2:
     image: snoozeweb/snooze
     environment:
@@ -45,7 +45,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == HOST2
+          - node.hostname == ${HOST2}
   snooze3:
     image: snoozeweb/snooze
     environment:
@@ -61,9 +61,9 @@ services:
       replicas: 1
       placement:
         constraints:
-           - node.hostname == HOST3
+           - node.hostname == ${HOST3}
   mongo1:
-    image: mongo
+    image: mongo:4.2.3
     networks:
       - snoozenw
     command: ["--replSet", "rs0"]
@@ -71,9 +71,9 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == HOST1
+          - node.hostname == ${HOST1}
   mongo2:
-    image: mongo
+    image: mongo:4.2.3
     networks:
       - snoozenw
     command: ["--replSet", "rs0"]
@@ -81,9 +81,9 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == HOST2
+          - node.hostname == ${HOST2}
   mongo3:
-    image: mongo
+    image: mongo:4.2.3
     networks:
       - snoozenw
     command: ["--replSet", "rs0"]
@@ -91,7 +91,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == HOST3
+          - node.hostname == ${HOST3}
 
 networks:
   snoozenw:
