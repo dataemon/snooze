@@ -63,7 +63,7 @@ services:
         constraints:
            - node.hostname == ${HOST3}
   mongo1:
-    image: mongo:4.2.3
+    image: mongo:6.0.11
     networks:
       - snoozenw
     command: ["--replSet", "rs0"]
@@ -73,7 +73,7 @@ services:
         constraints:
           - node.hostname == ${HOST1}
   mongo2:
-    image: mongo:4.2.3
+    image: mongo:6.0.11
     networks:
       - snoozenw
     command: ["--replSet", "rs0"]
@@ -83,7 +83,7 @@ services:
         constraints:
           - node.hostname == ${HOST2}
   mongo3:
-    image: mongo:4.2.3
+    image: mongo:6.0.11
     networks:
       - snoozenw
     command: ["--replSet", "rs0"]
