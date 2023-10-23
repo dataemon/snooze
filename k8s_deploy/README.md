@@ -32,7 +32,7 @@ docker stack deploy -c docker-compose.yaml snoozeweb
 
 replicate="rs.initiate(); sleep(1000); cfg = rs.conf(); cfg.members[0].host = \"mongo1:27017\"; rs.reconfig(cfg); rs.add({ host: \"mongo2:27017\", priority: 0.5 }); rs.add({ host: \"mongo3:27017\", priority: 0.5 }); rs.status();"
 
-docker exec -it $(docker ps -qf label=com.docker.swarm.service.name=snoozeweb_mongo1) /bin/bash -c "echo '${replicate}' | mongo"
+docker exec -it $(docker ps -qf label=com.docker.swarm.service.name=snoozeweb_mongo1) /bin/bash -c "echo '${replicate}' | mongosh"
 
 docker service ls
 
@@ -48,3 +48,92 @@ caf76666d9bf        snoozenw              bridge              local
 
 docker network rm caf76666d9bf
 ```
+
+set sysylog
+
+```bash
+sudo chmod 777 /opt/
+conda create -p /opt/snooze/ python=3.9
+
+
+
+
+cd /opt
+git clone https://github.com/snoozeweb/snooze_client.git
+cd snooze_client
+sudo /opt/snooze/bin/pip install .
+
+sudo /opt/snooze/bin/pip install python-dateutil
+
+sudo /opt/snooze/bin/pip install git+https://github.com/snoozeweb/snooze_plugins.git#subdirectory=input/syslog
+
+
+sudo vim /etc/systemd/system/snooze-syslog.service
+--------
+[Unit]
+Description=Snooze syslog input plugin
+After=network.target
+
+[Service]
+User=snooze
+ExecStart=/opt/snooze/bin/snooze-syslog
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+Alias=snooze-syslog.service
+-------
+
+sudo systemctl status network.target
+
+sudo systemctl daemon-reload
+sudo systemctl enable snooze-syslog.service
+sudo systemctl start snooze-syslog.service
+
+sudo systemctl status snooze-syslog.service
+sudo systemctl restart snooze-syslog.service
+sudo systemctl restart snooze-syslog.service
+sudo systemctl stop snooze-syslog.service
+
+sudo /opt/snooze/bin/snooze-syslog
+sudo ps aux | grep snooze-syslog
+
+sudo vim /etc/snooze/syslog.yaml
+---
+#################
+# General options
+#################
+
+# `listening_address`: Address to listen to.
+listening_address: 0.0.0.0
+
+# `listening_port`: Port to listen to. Please note than when choosing a port
+# lower than 1024 (like 514 for instance), you will need to run the process as root.
+listening_port: 1514
+
+################
+# Worker options
+################
+
+# `parse_workers`: Number of threads to use for parsing.
+parse_workers: 4
+
+# `send_workers`: Number of threads to use for sending to snooze server.
+send_workers: 4
+
+
+
+sudo vim /etc/snooze/client.yaml
+
+# /etc/snooze/client.yaml
+---
+server: http://10.146.16.30:80
+
+
+
+```
+
+
+
+
+
