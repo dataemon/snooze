@@ -8,7 +8,7 @@ This document describes the procedure for deploying the Snooze project using a M
 
 ## Build a highly available Kubernetes cluster with MicroK8s
 
-The following steps are referenced from the official MicroK8s [documentation-1](https://ubuntu.com/tutorials/getting-started-with-kubernetes-ha?&_ga=2.228013723.725207305.1695176263-1656778853.1693882766#1-overview), [documentation-2](https://microk8s.io/docs/getting-started) and [documentation-3](https://microk8s.io/docs/high-availability).
+The following steps are referenced from the official MicroK8s [documentation-1](https://ubuntu.com/tutorials/getting-started-with-kubernetes-ha#1-overview), [documentation-2](https://microk8s.io/docs/getting-started) and [documentation-3](https://microk8s.io/docs/high-availability).
 
 ### Install MicroK8s
 
@@ -17,6 +17,8 @@ The following steps are referenced from the official MicroK8s [documentation-1](
 On each one of your VMs run:
 ```bash
 sudo snap install microk8s --classic
+
+sudo snap remove --purge microk8s
 ```
 
 2. Join the group
@@ -173,6 +175,9 @@ Let’s now create a microbot deployment with three pods via the kubectl cli. Ru
 ```
 microk8s kubectl create deployment microbot --image=dontrebootme/microbot:v1
 microk8s kubectl scale deployment microbot --replicas=3
+
+microk8s kubectl delete deployment microbot
+microk8s kubectl delete service microbot-service
 ```
 
 To expose our deployment we need to create a service:
