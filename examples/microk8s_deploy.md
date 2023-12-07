@@ -121,6 +121,7 @@ Now let’s focus on creating the Kubernetes cluster. On the initial node, run:
 
 ```bash
 microk8s add-node
+microk8s kubectl get nodes
 ```
 
 This command will give you the following output:
@@ -151,6 +152,20 @@ microk8s.stop
 microk8s.start
 ```
 
+Removing a node
+First, on the node you want to remove, run microk8s leave. MicroK8s on the departing node
+will restart its own control plane and resume operations as a full single node cluster:
+
+```bash
+microk8s leave
+```
+To complete the node removal, call microk8s remove-node from the remaining nodes to
+indicate that the departing (unreachable now) node should be removed permanently:
+
+```bash
+microk8s remove-node 10.22.254.79
+```
+
 3. Check the status
 
 Run the status command:
@@ -175,6 +190,7 @@ Let’s now create a microbot deployment with three pods via the kubectl cli. Ru
 ```
 microk8s kubectl create deployment microbot --image=dontrebootme/microbot:v1
 microk8s kubectl scale deployment microbot --replicas=3
+// uclould one node deployment is ok, but 3 nodes deployment service is not reliable (network connection is unstable)
 
 microk8s kubectl delete deployment microbot
 microk8s kubectl delete service microbot-service
