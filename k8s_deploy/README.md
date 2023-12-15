@@ -157,18 +157,7 @@ server: http://${test_server_name}:80" > client.yaml
 
 ### docker
 
-docker build \
-    --rm \
-    --tag=snoozeweb/syslog:latest \
-    --no-cache \
-    --progress=plain \
-    - <<EOF
-    FROM alpine
-    RUN env | grep -i _PROXY
-    EOF \
-    .
-
-docker build \
+docker build --rm --tag=snoozeweb/syslog:latest .
   
   
 
