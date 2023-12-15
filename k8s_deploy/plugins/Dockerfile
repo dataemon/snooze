@@ -1,5 +1,5 @@
 # vim: syntax=dockerfile
-FROM python:3.8-alpine
+FROM python:3.8
 
 #ENV PYTHONUNBUFFERED 1
 #ENV PIP_DISABLE_PIP_VERSION_CHECK=1
@@ -25,8 +25,8 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 
 # hadolint ignore=DL3008
 #RUN sed -i 's/https/http/g' /etc/apk/repositories
-RUN apk update && \
-    apk --no-cache add \
+RUN apt-get update && \
+    apt-get install -y \
     curl \
     git
 
