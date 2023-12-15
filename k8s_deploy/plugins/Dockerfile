@@ -10,8 +10,6 @@ ARG RELEASE="stable"
 ARG VCS_REF=""
 ARG BUILD_DATE=now
 
-RUN env | grep -i _PROXY
-
 RUN update-ca-certificates
 ENV CA_REQUESTS_BUNDLE /etc/ssl/certs/ca-certificates.crt
 ENV PIP_CERT /etc/ssl/certs/ca-certificates.crt
