@@ -155,6 +155,10 @@ server: http://${test_server_name}:80" > client.yaml
 ```
 
 
+### docker
+
+docker build --rm --tag=snoozeweb/syslog:latest .
+
 ### docker deployment problems
 
 0. docker deployment is ok.

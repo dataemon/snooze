@@ -28,13 +28,7 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 RUN apk update && \
     apk --no-cache add \
     curl \
-    git \
-    gcc \
-    musl-dev \
-    linux-headers \
-    libldap \
-    python3-dev \
-    libffi-dev
+    git
 
 RUN pip install --no-cache-dir pip==21.0.1 virtualenv==20.4.4
 RUN mkdir -p /opt/snooze /etc/snooze/ && \
