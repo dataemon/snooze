@@ -31,12 +31,13 @@ RUN apk update && \
     git
 
 RUN pip install --no-cache-dir pip==21.0.1 virtualenv==20.4.4
+
 RUN mkdir -p /opt/snooze /etc/snooze/ && \
     python3 -m venv /opt/snooze && \
     /opt/snooze/bin/pip install python-dateutil==2.8.2
 
 # install the snooze_client
-RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/snoozeweb/snooze_client.git && \
+RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/snoozeweb/snooze_client.git
 
 # install the syslog plugin
 RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/snoozeweb/snooze_plugins.git#subdirectory=input/syslog
