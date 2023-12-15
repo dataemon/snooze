@@ -15,6 +15,17 @@ sudo docker rm -f snoozeweb snooze-db
 
 2. Advanced
 
+```
+<!-- ubuntu@xxx-k8s-server-1:~/proj/snooze$ docker service ps snoozeweb_snooze2 --no-trunc
+ID                          NAME                      IMAGE                                                                                             NODE               DESIRED STATE   CURRENT STATE             ERROR                                                                                                                      PORTS
+h7iotvxo0iias1lr82rkl8s20   snoozeweb_snooze2.1       snoozeweb/snooze:latest@sha256:f1647b674afbc3ac3bc28335f6e4a070275444012b580eb4b47ea65948ab08a8   xxx-k8s-server-2   Ready           Rejected 2 seconds ago    "network sandbox join failed: subnet sandbox join failed for "10.0.0.0/24": error creating vxlan interface: file exists"
+vgh1xcobw9as9p26gfnjhzl5e    \_ snoozeweb_snooze2.1   snoozeweb/snooze:latest@sha256:f1647b674afbc3ac3bc28335f6e4a070275444012b580eb4b47ea65948ab08a8   xxx-k8s-server-2   Shutdown        Rejected 7 seconds ago    "network sandbox join failed: subnet sandbox join failed for "10.0.0.0/24": error creating vxlan interface: file exists" -->
+
+# remove microk8s calico vxlan
+sudo ip link delete vxlan.calico
+ip link
+```
+
 deploy one single web service
 ```bash
 source .env `or` . .env
@@ -62,6 +73,8 @@ cd /opt
 git clone https://github.com/snoozeweb/snooze_client.git
 cd snooze_client
 sudo /opt/snooze/bin/pip install .
+
+# sudo /opt/snooze/bin/pip install git+https://github.com/snoozeweb/snooze_client.git
 
 sudo /opt/snooze/bin/pip install python-dateutil
 
@@ -129,6 +142,15 @@ sudo vim /etc/snooze/client.yaml
 ---
 server: http://10.146.16.30:80
 
+
+
+test_server_name="smy-xrpscan"
+echo $test_server_name
+export test_server_name
+
+
+"---
+server: http://${test_server_name}:80" > client.yaml
 
 ```
 
