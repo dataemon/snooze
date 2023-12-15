@@ -58,6 +58,9 @@ docker network list
 caf76666d9bf        snoozenw              bridge              local
 
 docker network rm caf76666d9bf
+
+
+docker run --name some-nginx --rm -it -d nginx bash
 ```
 
 ### set sysylog
