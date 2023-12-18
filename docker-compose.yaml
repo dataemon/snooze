@@ -4,7 +4,8 @@ services:
   lb:
     image: nginx
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      # - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 80:80
       # - 1514:1514
