@@ -1,5 +1,5 @@
 
-### Docker deployment
+# Docker deployment
 
 1. Simple
 
@@ -158,7 +158,7 @@ server: http://${test_server_name}:80" > client.yaml
 ```
 
 
-### docker
+### docker build
 
 docker build --rm --tag=snoozeweb/syslog:latest .
   
@@ -169,6 +169,9 @@ docker build --rm --tag=snoozeweb/syslog:latest .
 0. docker deployment is ok.
 1. Web access is very slow after a prolonged period of inactivity.
 2. The Kubernetes service on the lab cloud VMs is currently inaccessible.
+
+
+# Microk8s deployment
 
 ### debug findings 
 
