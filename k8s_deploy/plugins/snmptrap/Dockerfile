@@ -1,6 +1,6 @@
 # vim: syntax=dockerfile
 FROM python:3.8-slim
-
+# 3.8-slim-bookworm, 3.8.18-slim, 3.8-slim
 #ENV PYTHONUNBUFFERED 1
 #ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 #ENV PIP_NO_CACHE_DIR=1
@@ -23,9 +23,17 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 
 # SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# RUN cat /etc/apt/sources.list && echo "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+
+
 # hadolint ignore=DL3008
 #RUN sed -i 's/https/http/g' /etc/apk/repositories
-RUN apt-get update && \
+RUN echo \
+"deb http://deb.debian.org/debian/ buster main contrib non-free \n\
+deb http://deb.debian.org/debian/ buster-updates main contrib non-free \n\
+deb http://security.debian.org/debian-security buster/updates main contrib non-free" \
+    > /etc/apt/sources.list && \
+    apt-get update && \
     apt-get install -y \
     curl \
     git \
