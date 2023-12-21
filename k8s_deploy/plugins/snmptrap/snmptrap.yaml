@@ -17,7 +17,8 @@ listening_port: 1163
 # `mib_dirs`: An array of directory containing MIB files. All MIB file in these directories will
 # be loaded and used to provide MIB names instead of OIDs when creating records.
 mib_dirs:
-   - /usr/share/snmp/mibs
+   # - /usr/share/snmp/mibs
+   - /var/lib/snmp/mibs/
 
 ################
 # Worker options

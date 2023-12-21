@@ -16,7 +16,7 @@ ENV PIP_CERT /etc/ssl/certs/ca-certificates.crt
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.url="https://snoozeweb.net" \
-      org.label-schema.vcs-url="https://github.com/snoozeweb/snooze_client" \
+      org.label-schema.vcs-url="https://github.com/dataemon/snooze_plugins.git#subdirectory=input/snmptrap" \
       org.label-schema.vcs-ref=$RELEASE \
       org.label-schema.version=${VERSION}-${RELEASE} \
       org.label-schema.schema-version="1.0.0-rc.1"
@@ -28,23 +28,25 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
 RUN apt-get update && \
     apt-get install -y \
     curl \
-    git
+    git \
+    # snmp \
+    snmp-mibs-downloader && \
+    download-mibs
 
 RUN pip install --no-cache-dir pip==21.0.1 virtualenv==20.4.4
 
 RUN mkdir -p /opt/snooze /etc/snooze/ && \
-    python3 -m venv /opt/snooze && \
-    /opt/snooze/bin/pip install python-dateutil==2.8.2
+    python3 -m venv /opt/snooze 
 
 # install the snooze_client
-RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/snoozeweb/snooze_client.git
+RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/dataemon/snooze_client.git
 
-# install the syslog plugin
-RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/snoozeweb/snooze_plugins.git#subdirectory=input/syslog
+# install the snmptrap plugin
+RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/dataemon/snooze_plugins.git#subdirectory=input/snmptrap
 
 
 RUN chgrp -R 0 /opt/snooze && \
-    chmod -R g=u /opt/snooze 
+    chmod -R g=u /opt/snooze
 
 USER root
 
@@ -55,4 +57,4 @@ WORKDIR /opt/snooze/bin/
 
 ENTRYPOINT ["/opt/snooze/docker-entrypoint.sh"]
 
-EXPOSE 1514
+EXPOSE 1163

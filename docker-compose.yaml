@@ -109,6 +109,51 @@ services:
       placement:
         constraints:
           - node.hostname == ${HOST3}
+  snmptrap1:
+    image: snoozeweb/snmptrap
+    environment:
+      - SNOOZE_SERVER=snooze1
+    ports:
+      - "1164:1163"
+    networks:
+      - snoozenw
+    depends_on:
+      - snooze1
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == ${HOST1}
+  snmptrap2:
+    image: snoozeweb/snmptrap
+    environment:
+      - SNOOZE_SERVER=snooze2
+    ports:
+      - "1165:1163"
+    networks:
+      - snoozenw
+    depends_on:
+      - snooze2
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == ${HOST2}
+  snmptrap3:
+    image: snoozeweb/snmptrap
+    environment:
+      - SNOOZE_SERVER=snooze3
+    ports:
+      - "1166:1163"
+    networks:
+      - snoozenw
+    depends_on:
+      - snooze3
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == ${HOST3}
   mongo1:
     image: mongo:6.0.11
     networks:

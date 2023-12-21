@@ -16,7 +16,7 @@ ENV PIP_CERT /etc/ssl/certs/ca-certificates.crt
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.url="https://snoozeweb.net" \
-      org.label-schema.vcs-url="https://github.com/snoozeweb/snooze_client" \
+      org.label-schema.vcs-url="https://github.com/dataemon/snooze_plugins.git#subdirectory=input/syslog" \
       org.label-schema.vcs-ref=$RELEASE \
       org.label-schema.version=${VERSION}-${RELEASE} \
       org.label-schema.schema-version="1.0.0-rc.1"
@@ -37,10 +37,10 @@ RUN mkdir -p /opt/snooze /etc/snooze/ && \
     /opt/snooze/bin/pip install python-dateutil==2.8.2
 
 # install the snooze_client
-RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/snoozeweb/snooze_client.git
+RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/dataemon/snooze_client.git
 
 # install the syslog plugin
-RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/snoozeweb/snooze_plugins.git#subdirectory=input/syslog
+RUN /opt/snooze/bin/pip install --no-cache-dir git+https://github.com/dataemon/snooze_plugins.git#subdirectory=input/syslog
 
 
 RUN chgrp -R 0 /opt/snooze && \

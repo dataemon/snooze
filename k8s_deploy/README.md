@@ -161,6 +161,7 @@ server: http://${test_server_name}:80" > client.yaml
 ### docker build
 
 docker build --rm --tag=snoozeweb/syslog:latest .
+docker build --rm --tag=snoozeweb/snmptrap:latest .
   
   
 
