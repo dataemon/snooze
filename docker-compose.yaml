@@ -9,6 +9,7 @@ services:
     ports:
       - 80:80
       - 1514:1514
+      - 1163:1163
     networks:
       - snoozenw
     deploy:
