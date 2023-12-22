@@ -72,7 +72,8 @@ services:
     environment:
       - SNOOZE_SERVER=snooze1
     ports:
-      - "1515:1514"
+      - 1515:1514/tcp
+      - 1515:1514/udp
     networks:
       - snoozenw
     depends_on:
@@ -87,7 +88,8 @@ services:
     environment:
       - SNOOZE_SERVER=snooze2
     ports:
-      - "1516:1514"
+      - 1516:1514/tcp
+      - 1516:1514/udp
     networks:
       - snoozenw
     depends_on:
@@ -102,7 +104,8 @@ services:
     environment:
       - SNOOZE_SERVER=snooze3
     ports:
-      - "1517:1514"
+      - 1517:1514/tcp
+      - 1517:1514/udp
     networks:
       - snoozenw
     depends_on:
@@ -117,7 +120,8 @@ services:
     environment:
       - SNOOZE_SERVER=snooze1
     ports:
-      - "1164:1163"
+      - 1164:1163/tcp
+      - 1164:1163/udp
     networks:
       - snoozenw
     depends_on:
@@ -132,7 +136,8 @@ services:
     environment:
       - SNOOZE_SERVER=snooze2
     ports:
-      - "1165:1163"
+      - 1165:1163/tcp
+      - 1165:1163/udp
     networks:
       - snoozenw
     depends_on:
@@ -147,7 +152,8 @@ services:
     environment:
       - SNOOZE_SERVER=snooze3
     ports:
-      - "1166:1163"
+      - 1166:1163/tcp
+      - 1166:1163/udp
     networks:
       - snoozenw
     depends_on:

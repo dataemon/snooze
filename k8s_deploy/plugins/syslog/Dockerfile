@@ -55,4 +55,5 @@ WORKDIR /opt/snooze/bin/
 
 ENTRYPOINT ["/opt/snooze/docker-entrypoint.sh"]
 
-EXPOSE 1514
+EXPOSE 1514/tcp
+EXPOSE 1514/udp
