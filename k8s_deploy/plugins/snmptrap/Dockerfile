@@ -1,5 +1,5 @@
 # vim: syntax=dockerfile
-FROM python:3.8-slim
+FROM python:3.10-slim
 # 3.8-slim-bookworm, 3.8.18-slim, 3.8-slim
 #ENV PYTHONUNBUFFERED 1
 #ENV PIP_DISABLE_PIP_VERSION_CHECK=1
