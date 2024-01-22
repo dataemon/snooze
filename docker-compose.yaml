@@ -173,6 +173,9 @@ services:
       placement:
         constraints:
           - node.hostname == ${HOST1}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/snooze/mongodb:/data/db:rw
   mongo2:
     image: mongo:6.0.11
     networks:
@@ -183,6 +186,9 @@ services:
       placement:
         constraints:
           - node.hostname == ${HOST2}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/snooze/mongodb:/data/db:rw
   mongo3:
     image: mongo:6.0.11
     networks:
@@ -193,6 +199,9 @@ services:
       placement:
         constraints:
           - node.hostname == ${HOST3}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/snooze/mongodb:/data/db:rw
 
 networks:
   snoozenw:

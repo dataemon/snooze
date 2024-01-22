@@ -16,9 +16,11 @@ listening_port: 1163
 
 # `mib_dirs`: An array of directory containing MIB files. All MIB file in these directories will
 # be loaded and used to provide MIB names instead of OIDs when creating records.
+# /etc/snooze/snmptrap.yaml
 mib_dirs:
    # - /usr/share/snmp/mibs
-   - /var/lib/snmp/mibs/
+   # - /var/lib/snmp/mibs/
+   - /var/lib/mibs/
 
 ################
 # Worker options
